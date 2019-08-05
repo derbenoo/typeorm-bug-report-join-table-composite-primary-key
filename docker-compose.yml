@@ -1,8 +1,4 @@
-####################################################################################
-# Docker-compose file for spinning up a typeorm-bug-report container
-# USAGE: docker-compose up -d
-#
-####################################################################################
+# USAGE: docker-compose up --build -d
 
 version: "3.2"
 
@@ -14,11 +10,3 @@ services:
       - POSTGRES_DB=test
     ports:
       - "127.0.0.1:5432:5432"
-  pgadmin:
-    image: dpage/pgadmin4:3.6
-    environment:
-      - TZ=Europe/Berlin
-      - PGADMIN_DEFAULT_EMAIL=pgadmin
-      - PGADMIN_DEFAULT_PASSWORD=pgadmin
-    ports:
-      - "127.0.0.1:8080:80" # Web-interface

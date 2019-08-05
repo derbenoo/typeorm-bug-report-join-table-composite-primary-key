@@ -1,8 +1,8 @@
 # TypeORM bug report
 
-> Issue type: bug report
-> Database system: postgres
-> TypeORM version: 0.2.18
+* Issue type: bug report
+* Database system: postgres
+* TypeORM version: 0.2.18
 
 
 The bug occurs upon calculating a WHERE clause for a [join table with custom properties](https://typeorm.io/#/many-to-many-relations/many-to-many-relations-with-custom-properties) where one of the join partners has a **composite primary key** e.g., the `PostImage` join-table as seen below:

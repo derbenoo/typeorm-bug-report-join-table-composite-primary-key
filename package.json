@@ -1,7 +1,7 @@
 {
   "name": "typeorm-bug-report-join-table-composite-primary-key",
   "version": "1.0.0",
-  "description": "TypeORM bug report for calculating a WHERE clause for a find operation on a join table with custom properties where one of the join partners has a composite primary key",
+  "description": "TypeORM bug report for calculating a WHERE clause for a find operation on a join table with custom properties where one of the join partners has a composite primary key.",
   "main": "dist/app.js",
   "types": "dist/app.d.ts",
   "files": [

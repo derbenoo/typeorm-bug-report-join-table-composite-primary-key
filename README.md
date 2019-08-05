@@ -1,6 +1,11 @@
 # TypeORM bug report
 
-The bug occurs upon calculating a WHERE clause for a [join table with custom properties](https://typeorm.io/#/many-to-many-relations/many-to-many-relations-with-custom-properties), e.g., the `PostImage` table as seen below:
+> Issue type: bug report
+> Database system: postgres
+> TypeORM version: 0.2.18
+
+
+The bug occurs upon calculating a WHERE clause for a [join table with custom properties](https://typeorm.io/#/many-to-many-relations/many-to-many-relations-with-custom-properties) where one of the join partners has a **composite primary key** e.g., the `PostImage` join-table as seen below:
 
 <br />
 <p align="center">
@@ -41,12 +46,16 @@ The query builder correctly detects that the `Image` entity has a composite prim
 
 The issue seems to be that the `createPropertyPath` function does not return a correct result for a WHERE clause with an entity that has a composite primary key.
 
-Expected result: `["imageFileId", "imageUserId"]`
-Actual result: `["image"]`
+| Expected result                  | Actual result |
+| -------------------------------- | ------------- |
+| `["imageFileId", "imageUserId"]` | `["image"]`   |
 
-[EntityMetadata.ts#L706](https://github.com/typeorm/typeorm/blob/5e00e81626c41e0445b46922fb74903e5f790cd5/src/metadata/EntityMetadata.ts#L706)
+I could confirm that returning the expected result (by manually overriding the return value using a debugger) yields a correct SELECT query.
 
-[QueryBuilder.ts#L747](https://github.com/typeorm/typeorm/blob/master/src/query-builder/QueryBuilder.ts#L747)
+Source code links:
+
+* [EntityMetadata.ts#L706](https://github.com/typeorm/typeorm/blob/5e00e81626c41e0445b46922fb74903e5f790cd5/src/metadata/EntityMetadata.ts#L706)
+* [QueryBuilder.ts#L747](https://github.com/typeorm/typeorm/blob/master/src/query-builder/QueryBuilder.ts#L747)
 
 
 ## Minimal reproducable example

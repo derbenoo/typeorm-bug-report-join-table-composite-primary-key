@@ -1,0 +1,37 @@
+{
+  "name": "typeorm-bug-report",
+  "version": "1.0.0",
+  "description": "Decentro standard template for bootstrapping node TypeScript repositories!",
+  "main": "dist/app.js",
+  "types": "dist/app.d.ts",
+  "files": [
+    "src/*",
+    "dist/*",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc -p ./",
+    "debug": "TS_NODE_PROJECT=tsconfig.json TS_NODE_FILE=true node -r ts-node/register --inspect=0.0.0.0 --inspect-brk src/app.ts",
+    "start": "ts-node --project tsconfig.json src/app.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/decentro-gmbh/node-ts-repo-template.git"
+  },
+  "keywords": [],
+  "author": "Benjamin Assadsolimani",
+  "license": "MIT",
+  "homepage": "https://decentro-gmbh.github.io/node-ts-repo-template/",
+  "devDependencies": {
+    "@types/node": "^11.9.4",
+    "ts-node": "^8.0.2",
+    "typescript": "^3.3.3"
+  },
+  "dependencies": {
+    "@types/node": "^12.6.9",
+    "pg": "^7.12.0",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.2.18"
+  }
+}

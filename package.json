@@ -1,14 +1,13 @@
 {
-  "name": "typeorm-bug-report",
+  "name": "typeorm-bug-report-join-table-composite-primary-key",
   "version": "1.0.0",
-  "description": "Decentro standard template for bootstrapping node TypeScript repositories!",
+  "description": "TypeORM bug report for calculating a WHERE clause for a find operation on a join table with custom properties where one of the join partners has a composite primary key",
   "main": "dist/app.js",
   "types": "dist/app.d.ts",
   "files": [
     "src/*",
     "dist/*",
-    "README.md",
-    "LICENSE"
+    "README.md"
   ],
   "scripts": {
     "build": "tsc -p ./",
@@ -17,19 +16,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/decentro-gmbh/node-ts-repo-template.git"
+    "url": "git+https://github.com/derbenoo/typeorm-bug-report-join-table-composite-primary-key.git"
   },
   "keywords": [],
   "author": "Benjamin Assadsolimani",
   "license": "MIT",
-  "homepage": "https://decentro-gmbh.github.io/node-ts-repo-template/",
+  "homepage": "https://derbenoo.github.io/typeorm-bug-report-join-table-composite-primary-key/",
   "devDependencies": {
-    "@types/node": "^11.9.4",
+    "@types/node": "^12.6.9",
     "ts-node": "^8.0.2",
     "typescript": "^3.3.3"
   },
   "dependencies": {
-    "@types/node": "^12.6.9",
     "pg": "^7.12.0",
     "reflect-metadata": "^0.1.13",
     "typeorm": "^0.2.18"

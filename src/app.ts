@@ -37,13 +37,14 @@ async function main() {
       }
     ]
   });
+  debugger;
 
   await postRepository.save(post);
 
   // Search on the join table
   const postImages = await postImageRepository.find({
     where: {
-      image
+      image: { fileId: 1, userId: 100 }
     }
   });
 
@@ -66,7 +67,7 @@ async function main() {
   */
 
   // Print found postImages, expect one to be found
-  console.log(`Found postImages: ${postImages}`);
+  console.log(postImages);
 }
 
 main().then(() => process.exit(0));

@@ -1,9 +1,8 @@
 # TypeORM bug report
 
-* Issue type: bug report
-* Database system: postgres
-* TypeORM version: 0.2.18
-
+- Issue type: bug report
+- Database system: postgres
+- TypeORM version: 0.2.18
 
 The bug occurs upon calculating a WHERE clause for a [join table with custom properties](https://typeorm.io/#/many-to-many-relations/many-to-many-relations-with-custom-properties) where one of the join partners has a **composite primary key** e.g., the `PostImage` join-table as seen below:
 
@@ -13,7 +12,8 @@ The bug occurs upon calculating a WHERE clause for a [join table with custom pro
 </p>
 
 The following find operation is performed:
-``` ts
+
+```ts
 const postImages = await postImageRepository.find({
   where: {
     image: { fileId: 1, userId: 100 }
@@ -23,7 +23,7 @@ const postImages = await postImageRepository.find({
 
 The generated SQL query looks like the following:
 
-``` sql
+```sql
 SELECT
   "PostImage"."description" AS "PostImage_description",
   "PostImage"."imageFileId" AS "PostImage_imageFileId",
@@ -39,36 +39,36 @@ WHERE
 
 The query builder correctly detects that the `Image` entity has a composite primary key consisting of `fileId` and `userId`. However, while the parameters are correctly chosen (1 and 100), the property paths are incorrect as they are both `"PostImage"."imageFileId"` instead of:
 
-* `"PostImage"."imageFileId"` and
-* `"PostImage"."imageUserId"`
+- `"PostImage"."imageFileId"` and
+- `"PostImage"."imageUserId"`
 
 ## Analysis
 
 The issue seems to be that the `createPropertyPath` function does not return a correct result for a WHERE clause with an entity that has a composite primary key.
 
-| Expected result                  | Actual result |
-| -------------------------------- | ------------- |
-| `["imageFileId", "imageUserId"]` | `["image"]`   |
+| Expected result                    | Actual result |
+| ---------------------------------- | ------------- |
+| `["image.fileId", "image.userId"]` | `["image"]`   |
 
 I could confirm that returning the expected result (by manually overriding the return value using a debugger) yields a correct SELECT query.
 
 Source code links:
 
-* [EntityMetadata.ts#L706](https://github.com/typeorm/typeorm/blob/5e00e81626c41e0445b46922fb74903e5f790cd5/src/metadata/EntityMetadata.ts#L706)
-* [QueryBuilder.ts#L747](https://github.com/typeorm/typeorm/blob/master/src/query-builder/QueryBuilder.ts#L747)
-
+- [EntityMetadata.ts#L706](https://github.com/typeorm/typeorm/blob/5e00e81626c41e0445b46922fb74903e5f790cd5/src/metadata/EntityMetadata.ts#L706)
+- [QueryBuilder.ts#L747](https://github.com/typeorm/typeorm/blob/master/src/query-builder/QueryBuilder.ts#L747)
 
 ## Minimal reproducable example
 
 To run the bug report example provided in this repository, execute the following commands:
 
-``` sh
+```sh
 $ docker-compose up --build -d
 $ npm run start
 ```
 
 Post entity:
-``` ts
+
+```ts
 import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from "typeorm";
 import { PostImage } from "./PostImage";
 
@@ -85,11 +85,11 @@ export class Post {
   })
   postImages: PostImage[];
 }
-
 ```
 
 Image entity:
-``` ts
+
+```ts
 import { Column, Entity, OneToMany } from "typeorm";
 import { PostImage } from "./PostImage";
 
@@ -108,11 +108,11 @@ export class Image {
   @OneToMany(type => PostImage, postImage => postImage.image)
   postImages: PostImage[];
 }
-
 ```
 
 PostImage entity:
-``` ts
+
+```ts
 import { Entity, ManyToOne, Column } from "typeorm";
 import { Image } from "./Image";
 import { Post } from "./Post";
@@ -131,5 +131,4 @@ export class PostImage {
   @Column()
   description: string;
 }
-
 ```

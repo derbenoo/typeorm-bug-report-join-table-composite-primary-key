@@ -37,7 +37,6 @@ async function main() {
       }
     ]
   });
-  debugger;
 
   await postRepository.save(post);
 
